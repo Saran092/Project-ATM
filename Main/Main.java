@@ -10,6 +10,7 @@ public class Main{
 
 		do{
 			System.out.println("1.Create a New Account\n2.View Balance\n3.Deposit Amount from Account\n4.WithDraw Amount from Account\n5.Exit");
+			System.out.print("Enter Your Choice: ");
 			choice=input.nextInt();
 			switch(choice)
 			{
@@ -26,7 +27,7 @@ public class Main{
 					atm.withdrawAmount(input);
 					break;
 				case 5:
-					System.out.println("\nExiting...");
+					System.out.println("\nThank You Form Visiting Us......");
 					break;
 				default:
 					System.out.println("Invalid Choice!..Try Again!..");
