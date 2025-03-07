@@ -270,8 +270,11 @@ public class ATM{
 					} catch (SQLException e) {
 						System.out.println("Error during deposit: " + e.getMessage());
 					}
+					finally
+					{
+						System.out.println("Exiting Deposit ......");
+					}
 					break;
-
 				default:
 					System.out.println("Invalid Choice!..Try Again!..");
 					break;
@@ -339,6 +342,10 @@ public class ATM{
 					{
 						System.out.println("Error during withdrawal: " + e.getMessage());
 					}
+					finally
+					{
+						System.out.println("Exiting Withdrawal ......");
+					}
 				break;
 				case 2:
 					System.out.println("Enter Your Mobile Number:");
@@ -384,7 +391,11 @@ public class ATM{
 					} 
 					catch (SQLException e) {
 						System.out.println("Error during withdrawal: " + e.getMessage());
-					}	
+					}
+					finally
+					{
+						System.out.println("Exiting Withdrawal ......");
+					}
 				break;
 				case 3:
 					System.out.println("\nExiting...");
