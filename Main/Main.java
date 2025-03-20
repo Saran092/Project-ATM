@@ -4,36 +4,45 @@ public class Main{
 	public static void main(String args[])
 	{
 		Scanner input = new Scanner(System.in);
+
+		//                    👇 Objects             
 		ATM atm = new ATM();
-		int choice,mobileNumber,PIN;
-		String accountHolderName;
+		Create obj = new Create();
+		View obj1 = new View();
+		Deposit obj2 = new Deposit();
+		WithDraw obj3 = new WithDraw();
+		int choice;//mobileNumber,PIN;
+		// String accountHolderName;
 
 		do{
-			System.out.println("1.Create a New Account\n2.View Balance\n3.Deposit Amount from Account\n4.WithDraw Amount from Account\n5.Exit");
+			System.out.println("1.Create a New Account\n2.View Balance\n3.Deposit Amount from Account\n4.WithDraw Amount from Account\n 5.View Your Satatement\n6.Exit");
 			System.out.print("Enter Your Choice: ");
 			choice=input.nextInt();
 			switch(choice)
 			{
 				case 1:
-					atm.createAccount(input);
-					break;
+					obj.createAccount(input);
+				break;
 				case 2:
-					atm.viewBalance(input);
-					break;
+					obj1.viewBalance(input);
+				break;
 				case 3:
-					atm.depositAmount(input);
-					break;
+					obj2.depositAmount(input);
+				break;
 				case 4:
-					atm.withdrawAmount(input);
-					break;
+					obj3.withdrawAmount(input);
+				break;
 				case 5:
+					atm.Statement(input);
+				break;
+				case 6:
 					System.out.println("\nThank You Form Visiting Us......");
-					break;
+				break;
 				default:
 					System.out.println("Invalid Choice!..Try Again!..");
-			    	break;
+			    break;
 			}
 
-		}while(choice<5);
+		}while(choice<6);
 	}
 }
