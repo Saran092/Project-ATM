@@ -156,7 +156,7 @@ public class Deposit extends Connect{
 				case 3:
 					System.out.println("\n	Exit From Deposit....	\n");
 				default:
-					System.out.println("\nInvalid Choice!..Try Again!..\n");
+					System.out.println("\nInvalid Choice!..\nTry Again!..\n");
 					break;
 			}
 		}while(choice!=3);       
