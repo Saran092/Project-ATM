@@ -6,11 +6,11 @@ public class Main{
 		Scanner input = new Scanner(System.in);
 
 		//                    👇 Objects             
-		ATM atm = new ATM();
 		Create obj = new Create();
 		View obj1 = new View();
 		Deposit obj2 = new Deposit();
 		WithDraw obj3 = new WithDraw();
+		StatementView atm = new StatementView();
 		int choice;//mobileNumber,PIN;
 		// String accountHolderName;
 
