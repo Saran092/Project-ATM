@@ -45,7 +45,7 @@ public class StatementView extends Connect{
 								"Deposit Date		|"+
 								"Withdraw Amount		|"+
 								"Withdraw Date		";
-						System.out.println(print);
+						System.out.printf("%-20s%-20s%-20s%-20s%-20s%-20s%-20s%-20s\n","UserName","Customer ID","Account Number","Balance","Deposit Amount","Deposit Date","Withdraw Amount","Withdraw Date");
 						if(rs.next())
 						{
 							Name = rs.getString("Name");
@@ -56,7 +56,8 @@ public class StatementView extends Connect{
 							Ddate = rs.getString("DepositDate");
 							Wamount = rs.getDouble("WithdrawAmount");
 							Wdate = rs.getString("WithdrawDate");
-							System.out.prinf("%-10s");
+							System.out.printf("%-20s%-20s%-20s%-20s%-20s%-20s%-20s%-20s\n",Name,customerID,ACnu,balance,Damount,Ddate,Wamount,Wdate);
+						}
 					}
 					catch(SQLException e)
 					{
@@ -64,7 +65,7 @@ public class StatementView extends Connect{
 					}
 					finally
 					{
-						System.out.println("Exiting Statement....");
+						System.out.println("\nExiting Statement....");
 					}
 				break;
 			
