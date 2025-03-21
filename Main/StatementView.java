@@ -1,14 +1,13 @@
 import java.sql.*;
 import java.util.*;
 
-import javax.naming.spi.DirStateFactory.Result;
 
 
 public class StatementView extends Connect{
 	public void Statement(Scanner input)
 	{
 		int choice,PIN;
-		String customerID,print,Name,Ddate,Wdate;
+		String customerID,Name,Ddate,Wdate,Select;
 		Double Damount,Wamount,balance;
 		Long ACnu;
 		PreparedStatement prsmt = null;
@@ -26,9 +25,9 @@ public class StatementView extends Connect{
 					System.out.println("Enter Your PIN: ");
 					PIN = input.nextInt();
 
-					String Select = "SELECT Userdetails.Name,Userdetails.CustomerID,Userdetails.Account_number,Userdetails.Balance,Deposit.DepositAmount,Deposit.DepositDate,Withdraw.WithdrawAmount,Withdraw.WithdrawDate "+
-									"from Userdetails INNER JOIN Deposit ON Userdetails.id = Deposit.userID INNER JOIN Withdraw ON "+
-									"Userdetails.id = Withdraw.userId WHERE Userdetails.CustomerID = ? AND Userdetails.PIN = ?";
+					Select = "SELECT Userdetails.Name,Userdetails.CustomerID,Userdetails.Account_number,Userdetails.Balance,Deposit.DepositAmount,Deposit.DepositDate,Withdraw.WithdrawAmount,Withdraw.WithdrawDate "+
+									"from Userdetails LEFT JOIN Deposit ON Userdetails.id = Deposit.userID LEFT JOIN Withdraw ON "+
+									"Userdetails.id = Withdraw.userId WHERE Userdetails.CustomerID = ? AND Userdetails.PIN = ? ORDER BY Userdetails.Name";
 					try(Connection conn = connect())
 					{
 						prsmt = conn.prepareStatement(Select);
@@ -37,16 +36,8 @@ public class StatementView extends Connect{
 						prsmt.setInt(2, PIN);
 						
 						rs = prsmt.executeQuery();
-						print ="UserName		|"+
-								"Customer ID		|"+
-								"Account Number		|"+
-								"Balance 		|"+
-								"Deposit Amount		|"+
-								"Deposit Date		|"+
-								"Withdraw Amount		|"+
-								"Withdraw Date		";
 						System.out.printf("%-20s%-20s%-20s%-20s%-20s%-20s%-20s%-20s\n","UserName","Customer ID","Account Number","Balance","Deposit Amount","Deposit Date","Withdraw Amount","Withdraw Date");
-						if(rs.next())
+						while(rs.next())
 						{
 							Name = rs.getString("Name");
 							customerID = rs.getString("CustomerID");
@@ -65,12 +56,92 @@ public class StatementView extends Connect{
 					}
 					finally
 					{
-						System.out.println("\nExiting Statement....");
+						System.out.println("\nExiting Statement....\n");
 					}
 				break;
-			
+				case 2:
+					input.nextLine();
+					System.out.println("Enter Your Customer ID: ");
+					customerID = input.nextLine();
+					System.out.println("Enter Your PIN: ");
+					PIN = input.nextInt();
+
+					Select = "SELECT Userdetails.Name,Userdetails.CustomerID,Userdetails.Account_number,Userdetails.Balance,Deposit.DepositAmount,Deposit.DepositDate "+
+					"from Userdetails LEFT JOIN Deposit ON Userdetails.id = Deposit.userID  WHERE Userdetails.CustomerID = ? AND Userdetails.PIN = ? ORDER BY Userdetails.Name";
+
+					try(Connection conn = connect())
+					{
+						prsmt = conn.prepareStatement(Select);
+						
+						prsmt.setString(1, customerID);
+						prsmt.setInt(2, PIN);
+						
+						rs = prsmt.executeQuery();
+						System.out.printf("%-20s%-20s%-20s%-20s%-20s%-20s\n","UserName","Customer ID","Account Number","Balance","Deposit Amount","Deposit Date");
+						while(rs.next())
+						{
+							Name = rs.getString("Name");
+							customerID = rs.getString("CustomerID");
+							ACnu = rs.getLong("Account_number");
+							balance = rs.getDouble("Balance");
+							Damount = rs.getDouble("DepositAmount");
+							Ddate = rs.getString("DepositDate");
+							System.out.printf("%-20s%-20s%-20s%-20s%-20s%-20s\n",Name,customerID,ACnu,balance,Damount,Ddate);
+						}
+					}
+					catch(SQLException e)
+					{
+						System.out.println("\n Error : "+e.getMessage());
+					}
+					finally
+					{
+						System.out.println("\nExiting Statement From Deposit....\n");
+					}
+				break;
+				case 3:
+				input.nextLine();
+				System.out.println("Enter Your Customer ID: ");
+				customerID = input.nextLine();
+				System.out.println("Enter Your PIN: ");
+				PIN = input.nextInt();
+
+				Select = "SELECT Userdetails.Name,Userdetails.CustomerID,Userdetails.Account_number,Userdetails.Balance,Withdraw.WithdrawAmount,Withdraw.WithdrawDate "+
+						"from Userdetails Left JOIN Withdraw ON Userdetails.id = Withdraw.userId WHERE Userdetails.CustomerID = ? AND Userdetails.PIN = ? ORDER BY Userdetails.Name";
+
+				try(Connection conn = connect())
+				{
+					prsmt = conn.prepareStatement(Select);
+					
+					prsmt.setString(1, customerID);
+					prsmt.setInt(2, PIN);
+					
+					rs = prsmt.executeQuery();
+					System.out.printf("%-20s%-20s%-20s%-20s%-20s%-20s\n","UserName","Customer ID","Account Number","Balance","WithDraw Amount","WithDraw Date");
+					while(rs.next())
+					{
+						Name = rs.getString("Name");
+						customerID = rs.getString("CustomerID");
+						ACnu = rs.getLong("Account_number");
+						balance = rs.getDouble("Balance");
+						Wamount = rs.getDouble("WithdrawAmount");
+						Wdate = rs.getString("WithdrawDate");
+						System.out.printf("%-20s%-20s%-20s%-20s%-20s%-20s\n",Name,customerID,ACnu,balance,Wamount,Wdate);
+					}
+				}
+				catch(SQLException e)
+				{
+					System.out.println("\n Error : "+e.getMessage());
+				}
+				finally
+				{
+					System.out.println("\nExiting Statement From WithDraw....\n");
+				}
+				break;
+				case 4:
+					System.out.println("\nExit From Statement Menu .....\n");
+				break;
 				default:
-					System.out.println("\nInvalid Choice!..Try Again!..");
+					System.out.println("\nInvalid Choice!..\nTry Again!..");
 				break;
 			}
 		}while(choice<4);
